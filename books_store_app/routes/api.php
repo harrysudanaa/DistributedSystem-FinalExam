@@ -3,6 +3,9 @@
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\BooksController;
+use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,9 +25,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::middleware(['auth:sanctum'])->group(function () {
+    Route::apiResource('books', BooksController::class);
     Route::apiResource('users', UserController::class);
-    Route::middleware(['check_role:owner'])->group(function () {
-    });
+    Route::get('/transactions', [TransactionsController::class, 'index']);
+    Route::post('/transactions/create', [TransactionsController::class, 'store']);
 });
 Route::post('/register', RegisterController::class);
 Route::post('/login', [LoginController::class, 'login']);
