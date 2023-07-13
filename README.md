@@ -5,7 +5,7 @@
 2. Run git clone https://github.com/harrysudanaa/DistributedSystem-FinalExam.git
 4. Change directory to books_store_app
 5. Run composer install
-6. Run cp .env.example .env
+6. Run copy .env.example .env
 7. Run cd ..
 8. Run php artisan migrate
 9. Run docker-compose build
