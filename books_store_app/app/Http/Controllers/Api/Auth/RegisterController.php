@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
@@ -26,15 +28,20 @@ class RegisterController extends Controller
             'email' => 'required|unique:users|email',
             'password' => 'required|min:8',
             'role' => 'required',
+            'image' => 'image|file|max:2048',
         ]);
-
+        $image = $request->file('image');
+        $imageName = Str::random(40) . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('images/users'), $imageName);
+        // $path = public_path('images/users/') . $imageName;
         $user = User::create([
             'name' => $request->name,
             'gender' => $request->gender,
             'address' => $request->address,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role' => $request->role
+            'role' => $request->role,
+            'image' => $imageName,
         ]);
 
         $token = $user->createToken('auth_token');
