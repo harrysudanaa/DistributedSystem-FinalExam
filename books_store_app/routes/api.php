@@ -3,12 +3,13 @@
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\RegisterController;
-use App\Http\Controllers\BookController;
-use App\Http\Controllers\BooksController;
-use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\Api\ExpenditureController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\BooksController;
+use App\Http\Controllers\TransactionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('users', UserController::class);
     Route::get('/transactions', [TransactionsController::class, 'index']);
     Route::post('/transactions/create', [TransactionsController::class, 'store']);
+    Route::apiResource('expenditure', ExpenditureController::class);
 });
 Route::post('/register', RegisterController::class);
 Route::post('/login', [LoginController::class, 'login']);
